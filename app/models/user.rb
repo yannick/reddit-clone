@@ -20,7 +20,7 @@ class User < Ohm::Model
   end
 
   def self.authenticate(username, password)
-    raise WrongUsername unless user = find(:username, username).first
+    raise WrongUsername unless user = find(username: username).first
     raise WrongPassword unless user.password == encrypt(password, user.salt)
     user
   end
@@ -42,7 +42,7 @@ class User < Ohm::Model
   end
 
   def posts_authored
-    Post.find(:author, id)
+    Post.find(author: id)
   end
 
   def votes_received

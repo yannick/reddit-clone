@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Main
   get "/posts/new" do
     @post = Post.new
