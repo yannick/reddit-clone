@@ -16,17 +16,6 @@ class Base
   def bar; attributes[:bar] end
   def baz; attributes[:baz] end
 
-  def bar=(value); attributes[:bar] = value; end
-  def baz=(value); attributes[:baz] = value; end
-
-  def save
-    self
-  end
-
-  def valid?
-    true
-  end
-
   extend Spawn
 end
 
@@ -122,16 +111,6 @@ class TestFoo < Test::Unit::TestCase
           foo = Foo.spawn :bar => 1
           assert_equal 1, foo.bar
           assert_equal 8, foo.baz
-        end
-      end
-
-      context "with a block supplied" do
-        should "override the default values with single assignments" do
-          foo = Foo.spawn(:bar => 1) do |f|
-            f.baz = 2
-          end
-          assert_equal 1, foo.bar
-          assert_equal 2, foo.baz
         end
       end
 

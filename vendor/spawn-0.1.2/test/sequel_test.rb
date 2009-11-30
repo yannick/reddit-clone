@@ -15,6 +15,7 @@ class SequelUser < Sequel::Model
   end
 
   spawner do |user|
+    user.name = Faker::Name.name
     user.email = Faker::Internet.email
   end
 end
@@ -31,8 +32,8 @@ class TestSpawnWithSequel < Test::Unit::TestCase
 
     context "with invalid attributes" do
       should "raise an error" do
-        assert_raise Spawn::Invalid do
-          SequelUser.spawn
+        assert_raise Sequel::Error::InvalidValue do
+          SequelUser.spawn :name => nil
         end
       end
     end
