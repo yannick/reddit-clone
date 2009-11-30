@@ -729,6 +729,7 @@ HAML
   def test_doctypes
     assert_equal('<!DOCTYPE html>',
       render('!!!', :format => :html5).strip)
+    assert_equal('<!DOCTYPE html>', render('!!! 5').strip)
     assert_equal('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
       render('!!! strict').strip)
     assert_equal('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
@@ -1031,6 +1032,11 @@ END
 
   def test_dynamic_hashes_with_suppress_eval
     assert_equal("<a></a>\n", render('%a{:b => "a #{1 + 1} b", :c => "d"}', :suppress_eval => true))
+  end
+
+  def test_utf8_attrs
+    assert_equal("<a href='héllo'></a>\n", render("%a{:href => 'héllo'}"))
+    assert_equal("<a href='héllo'></a>\n", render("%a(href='héllo')"))
   end
 
   # HTML 4.0
